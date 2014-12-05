@@ -46,11 +46,11 @@ wordcounter.count(source, function (result, logs) {
 ### NodeJS
 
 ```javascript
-var fs = require("fs"),
-    WordCounter = require("wordcounter"),
+var fs = require('fs'),
+    WordCounter = require('wordcounter'),
     wordcounter = new WordCounter(options);
 
-fs.readFile("/path/to/source.txt", function(err, data) {
+fs.readFile('/path/to/source.txt', function(err, data) {
   if (err) {
     throw err;
   }
@@ -59,12 +59,12 @@ fs.readFile("/path/to/source.txt", function(err, data) {
   data = wordcounter.count(data);
   data = JSON.stringify(data);
 
-  fs.writeFile("/path/to/result.json", data, function (err) {
+  fs.writeFile('/path/to/result.json', data, function (err) {
     if (err) {
       throw err;
     }
 
-    console.log("Done, without errors.");
+    console.log('Done, without errors.');
   });
 });
 ```
@@ -107,11 +107,9 @@ For example:
 
 ```
 [
-  "var",
-  "this",
-  "case",
-  "return",
-  "function"
+  'this',
+  'return',
+  'function'
 ]
 ```
 
@@ -120,29 +118,21 @@ For example:
 
 #### setup(options)
 
-- Params:
-  - options:
-    - Type: `Object`
-
-- Return: `undefined`
+Params | Type | Description
+------ | ---- | -----------
+options | `Object` | Custom options
 
 Changes the default options.
 
 
 #### count(source[, callback]])
 
-- Params:
-  - source:
-    - Type: `String`
+Params | Type | Description
+------ | ---- | -----------
+source | `String` | The source text for counting,
+callback | `Function` | For example: `function (result, logs) {}`
 
-  - callback:
-    - Type: `Function`
-
-- Return:
-  - Type: `Array`
-  - The result items group.
-
-Counts words from the source text.
+Counts words from the source text, returns a words array.
 
 
 ## Example
@@ -151,17 +141,17 @@ Counts words from the source text.
 var wordcounter = new WordCounter({
       mincount: 2,
       minlength: 4,
-      ignore: ["norf"]
+      ignore: ['norf']
     });
 
-wordcounter.count("foo bar fubar fubar baz quux quux quux norf norf", function (result, logs) {
+wordcounter.count('foo fubar fubar bar quux quux quux norf norf', function (result, logs) {
   console.log(result);
   /*
   [{
-    word: "quux",
+    word: 'quux',
     count: 3
   }, {
-    word: "fubar",
+    word: 'fubar',
     count: 2
   }]
   */
