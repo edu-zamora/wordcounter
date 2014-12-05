@@ -1,8 +1,8 @@
 # Files to ignore
 
 node_modules
+npm-debug.log
 _gh_pages
 docs
 CHANGELOG.md
-
 *.zip
