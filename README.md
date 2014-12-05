@@ -158,11 +158,11 @@ wordcounter.count("foo bar fubar fubar baz quux quux quux norf norf", function (
   console.log(result);
   /*
   [{
-    word: "fubar",
-    count: 2
-  }, {
     word: "quux",
     count: 3
+  }, {
+    word: "fubar",
+    count: 2
   }]
   */
 
