@@ -5,7 +5,7 @@
  * Copyright 2014 Fengyuan Chen
  * Released under the MIT license
  *
- * Date: 2014-12-05T10:16:14.519Z
+ * Date: 2014-12-05T11:18:28.609Z
  */
 
 (function () {
@@ -221,14 +221,6 @@
       });
 
       return obj;
-    },
-
-    proxy: function (fn, context) {
-      var args = util.toArray(arguments, 2);
-
-      return function () {
-        return fn.apply(context, args.concat(util.toArray(arguments)));
-      };
     }
   };
 

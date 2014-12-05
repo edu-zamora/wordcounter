@@ -221,14 +221,6 @@
       });
 
       return obj;
-    },
-
-    proxy: function (fn, context) {
-      var args = util.toArray(arguments, 2);
-
-      return function () {
-        return fn.apply(context, args.concat(util.toArray(arguments)));
-      };
     }
   };
 
