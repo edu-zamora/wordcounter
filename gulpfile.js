@@ -14,24 +14,13 @@
       nodeunit = require('gulp-nodeunit'),
       del = require('del'),
       fs = require('fs'),
-      readJSON = function (path) {
-        if (fs.existsSync(path)) {
-          return JSON.parse(fs.readFileSync(path));
-        }
-      },
-      pkg = readJSON('package.json'),
-      jshintOptions = readJSON('.jshintrc'),
-      jscsOptions = readJSON('.jscsrc'),
-      csslintOptions = readJSON('.csslintrc');
+      pkg = JSON.parse(fs.readFileSync('package.json')),
+      jshintOptions = JSON.parse(fs.readFileSync('.jshintrc')),
+      jscsOptions = JSON.parse(fs.readFileSync('.jscsrc')),
+      csslintOptions = JSON.parse(fs.readFileSync('.csslintrc'));
 
   gulp.task('clean', function (cb) {
-    return del(['dist', '_gh_pages'], function (err) {
-      if (err) {
-        return cb(err);
-      }
-
-      cb();
-    });
+    return del(['dist', '_gh_pages'], cb);
   });
 
   gulp.task('check', function () {
@@ -75,18 +64,23 @@
     .pipe(gulp.dest('dist'));
   });
 
+  gulp.task('release', ['compress'], function () {
+    return gulp.src('dist/*.js')
+    .pipe(gulp.dest('releases/' + pkg.version));
+  });
+
   gulp.task('sync', ['compress'], function () {
     return gulp.src('dist/*.js')
     .pipe(gulp.dest('docs/js'))
     .pipe(gulp.dest('_gh_pages/js'));
   });
 
-  gulp.task('docs.img', function () {
+  gulp.task('docs.img', ['clean'], function () {
     return gulp.src('docs/img/*')
     .pipe(gulp.dest('_gh_pages/img'));
   });
 
-  gulp.task('docs.css', function () {
+  gulp.task('docs.css', ['clean'], function () {
     return gulp.src('docs/css/docs.css')
     // .pipe(csslint('.csslintrc'))
     .pipe(csslint(csslintOptions))
@@ -95,7 +89,7 @@
     .pipe(gulp.dest('_gh_pages/css'));
   });
 
-  gulp.task('docs.js', function () {
+  gulp.task('docs.js', ['clean'], function () {
     return gulp.src('docs/js/docs.js')
     .pipe(jshint(jshintOptions))
     .pipe(jshint.reporter())
@@ -103,7 +97,7 @@
     .pipe(gulp.dest('_gh_pages/js'));
   });
 
-  gulp.task('docs', ['copy', 'docs.img', 'docs.css', 'docs.js'], function () {
+  gulp.task('docs', ['docs.img', 'docs.css', 'docs.js'], function () {
     return gulp.src('docs/*.html')
     .pipe(htmlmin({
       collapseWhitespace: true,

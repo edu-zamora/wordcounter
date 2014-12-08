@@ -100,18 +100,9 @@ Reports counting result in console.
 
 - Type: `Array`
 - Default: `[]`
+- Example: `['this', 'return', 'function']`
 
 Ingores words.
-
-For example:
-
-```
-[
-  'this',
-  'return',
-  'function'
-]
-```
 
 
 ## Methods

@@ -3,6 +3,7 @@
 node_modules
 npm-debug.log
 _gh_pages
+releases
 docs
 CHANGELOG.md
 *.zip
