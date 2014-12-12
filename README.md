@@ -5,15 +5,6 @@ JavaScript word counter.
 - [Demo](https://fengyuanchen.github.io/wordcounter)
 
 
-# Main
-
-```
-dist/
-├── dist/wordcounter.js      (6 KB)
-└── dist/wordcounter.min.js  (3 KB)
-```
-
-
 # Getting started
 
 ## Quick start
