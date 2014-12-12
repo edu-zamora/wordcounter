@@ -1,6 +1,7 @@
 # Windows image file caches
 node_modules
 _gh_pages
+releases
 docs
 CHANGELOG.md
 *.zip
