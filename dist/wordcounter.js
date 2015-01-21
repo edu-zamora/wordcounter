@@ -1,27 +1,26 @@
 /*!
- * Word Counter v0.0.1
+ * Word Counter v0.0.2
  * https://github.com/fengyuanchen/wordcounter
  *
- * Copyright 2014 Fengyuan Chen
+ * Copyright 2014-2015 Fengyuan Chen
  * Released under the MIT license
  *
- * Date: 2014-12-05T11:18:28.609Z
+ * Date: 2015-01-21T13:57:36.212Z
  */
 
 (function () {
 
   'use strict';
 
-  var console = typeof console !== 'undefined' ? console : { log: function () {} },
-      WordCounter = function (options) {
-        this.defaults = util.extend({}, WordCounter.DEFAULTS, options);
+  var WordCounter = function (options) {
+        this.options = util.extend({}, WordCounter.DEFAULTS);
+        this.setup(options);
         this.source = '';
         this.result = null;
       },
 
-      array = [],
-      slice = array.slice,
-      indexOf = array.indexOf,
+      slice = [].slice,
+      indexOf = [].indexOf,
       toString = {}.toString,
       util;
 
@@ -37,32 +36,32 @@
 
     setup: function (options) {
       if (typeof options === 'object') {
-        util.extend(this.defaults, options);
+        util.extend(this.options, options);
       }
     },
 
     count: function (source, callback) {
-      var defaults = this.defaults,
+      var options = this.options,
           result = [],
           caches = [],
           words;
 
       if (typeof source !== 'string') {
-        throw new Error('first argument must be a string');
+        throw new Error('First argument must be a string');
       }
 
       this.source = source;
 
-      // Match
+      // Match words
       words = source.match(/\b\w+(-\w+)*\b/g);
 
       if (words) {
 
-        // Count
+        // Count words
         util.each(words, function (word) {
           var existed;
 
-          if (word.length < defaults.minlength || util.inArray(word, defaults.ignore) !== -1) {
+          if (word.length < options.minlength || util.inArray(word, options.ignore) !== -1) {
             return;
           }
 
@@ -82,14 +81,14 @@
           }
         });
 
-        // Filter
+        // Filter words
         util.each(caches, function (cache) {
-          if (cache.count >= defaults.mincount) {
+          if (cache.count >= options.mincount) {
             result.push(cache);
           }
         });
 
-        // Sort
+        // Sort words
         result = result.sort(function (a, b) {
           var order = b.count - a.count; // Sort by count
 
@@ -104,7 +103,7 @@
       this.result = result;
       this.logs = this.format(result);
 
-      if (defaults.report) {
+      if (options.report && typeof console !== 'undefined') {
         console.log(this.logs);
       }
 
@@ -239,7 +238,7 @@
   }
 
   if (typeof define === 'function' && define.amd) {
-    define('htmlcomb', [], function () {
+    define('wordcounter', [], function () {
       return WordCounter;
     });
   }

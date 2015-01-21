@@ -106,13 +106,13 @@
               'baz'
             ]
           }),
-          defaults = wordcounter.defaults;
+          options = wordcounter.options;
 
       test.expect(3);
 
-      test.ok(defaults.mincount === 2, 'The "mincount" option must be 2.');
-      test.ok(defaults.minlength === 3, 'The "minlength" option must be 3.');
-      test.deepEqual(defaults.ignore, ['foo', 'bar', 'baz'], 'The "ignore" option must be `[\'foo\', \'bar\', \'baz\']`.');
+      test.ok(options.mincount === 2, 'The "mincount" option must be 2.');
+      test.ok(options.minlength === 3, 'The "minlength" option must be 3.');
+      test.deepEqual(options.ignore, ['foo', 'bar', 'baz'], 'The "ignore" option must be `[\'foo\', \'bar\', \'baz\']`.');
 
       test.done();
     },

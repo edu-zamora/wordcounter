@@ -43,8 +43,12 @@
           placeholder = pkg.version;
           break;
 
+        case '@YEAR':
+          placeholder = (new Date()).getFullYear();
+          break;
+
         case '@DATE':
-          placeholder = new Date().toISOString();
+          placeholder = (new Date()).toISOString();
           break;
       }
 
