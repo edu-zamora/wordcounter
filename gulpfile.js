@@ -101,7 +101,12 @@
     .pipe(gulp.dest('_gh_pages/js'));
   });
 
-  gulp.task('docs', ['docs.img', 'docs.css', 'docs.js'], function () {
+  gulp.task('docs.misc', ['clean'], function () {
+    return gulp.src('docs/js/jquery.js')
+    .pipe(gulp.dest('_gh_pages/js'));
+  });
+
+  gulp.task('docs', ['docs.img', 'docs.css', 'docs.js', 'docs.misc'], function () {
     return gulp.src('docs/*.html')
     .pipe(htmlmin({
       collapseWhitespace: true,
