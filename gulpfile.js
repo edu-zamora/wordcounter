@@ -14,7 +14,7 @@
       nodeunit = require('gulp-nodeunit'),
       del = require('del'),
       fs = require('fs'),
-      pkg = JSON.parse(fs.readFileSync('package.json')),
+      pkg = require('./package'),
       jshintOptions = JSON.parse(fs.readFileSync('.jshintrc')),
       jscsOptions = JSON.parse(fs.readFileSync('.jscsrc')),
       csslintOptions = JSON.parse(fs.readFileSync('.csslintrc'));
