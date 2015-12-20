@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="JavaScript word counter.">
+  <meta name="keywords" content="HTML, CSS, JS, JavaScript, word count, web development">
+  <meta name="author" content="Fengyuan Chen">
+  <title>Word Counter</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="brand"><a href="./">Word Counter</a><small>JavaScript word counter.</small></h1>
+      <ul class="nav">
+        <li class="active"><a data-toggle="reset" href="javascript:void(0);">Home</a></li>
+        <li><a data-toggle="code" href="javascript:void(0);">Code</a></li>
+        <li><a data-toggle="example" href="javascript:void(0);">Example</a></li>
+        <li><a href="https://github.com/fengyuanchen/wordcounter/blob/master/README.md">Docs</a></li>
+        <li><a href="https://github.com/fengyuanchen/wordcounter">GitHub</a></li>
+      </ul>
+    </div>
+    <div class="main">
+      <div class="mainbody">
+        <textarea class="input" id="source" placeholder="Source..."></textarea>
+      </div>
+      <div class="sidebar">
+        <textarea class="output" id="result" placeholder="Result..." readonly></textarea>
+      </div>
+    </div>
+    <div class="footer">
+      <span class="blocks"></span>
+    </div>
+  </div>
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="js/wordcounter.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
