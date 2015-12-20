@@ -234,13 +234,13 @@
     },
 
     format: function (words) {
-      var total = toString.call(words.length).length;
+      var total = words.length.toString().length;
       var lines = [];
 
       each(words, function (n, i) {
         var line = ++i;
         var spaces = [];
-        var count = total - toString.call(line).length;
+        var count = total - line.toString().length;
 
         while (count-- > 0) {
           spaces.push(' ');
