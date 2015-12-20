@@ -78,7 +78,6 @@ gulp.task('site', function () {
 
 gulp.task('release', ['test', 'site'], function () {
   return gulp.src('dist/*.js')
-    .pipe(gulp.dest('_gh_pages/js'))
     .pipe(gulp.dest('_releases/' + pkg.version));
 });
 
