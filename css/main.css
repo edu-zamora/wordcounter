@@ -1,0 +1,177 @@
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #fff;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  background-color: #001f3f;
+  color: #fff;
+  overflow: hidden;
+}
+
+.brand {
+  float: left;
+  margin: 0;
+  padding: 10px 20px;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 500;
+}
+
+.brand a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.brand small {
+  display: none;
+  margin-left: 15px;
+  font-size: 14px;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+
+.nav {
+  float: right;
+  margin: 0;
+  padding: 10px 20px;
+}
+
+.nav > li {
+  float: left;
+  list-style: none;
+}
+
+.nav > li + li {
+  margin-left: 15px;
+}
+
+.nav > li > a {
+  color: #fff;
+  line-height: 30px;
+  text-decoration: none;
+}
+
+.nav > .active > a,
+.nav > li > a:focus,
+.nav > li > a:hover {
+  opacity: .8;
+  filter: alpha(opacity=80);
+}
+
+.nav > .active > a {
+  cursor: default;
+}
+
+.main {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  bottom: 10px;
+  left: 0;
+}
+
+.mainbody,
+.sidebar {
+  height: 50%;
+}
+
+@media (min-width: 767px) {
+  .brand small {
+    display: inline;
+  }
+
+  .mainbody {
+    position: absolute;
+    top: 0;
+    right: 240px;
+    bottom: 0;
+    left: 0;
+    height: auto;
+  }
+
+  .sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 240px;
+    height: auto;
+  }
+}
+
+.input,
+.output {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border: none;
+  resize: none;
+  color: #001f3f;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.input:focus,
+.output:focus {
+  outline: 0;
+}
+
+.input {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, .1);
+}
+
+.output {
+  border-left: 1px solid #ddd;
+  background-color: #eee;
+}
+
+.blocks {
+  position: absolute;
+  bottom: 0;
+  right: 105px;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAIWSURBVEiJ7ZYxaBNhFMd/SW4TNUalDh2MiAji4FYVoYPg6FJdHMRil04OLuoSKU6KF+pQ1EhSQaqtixIQkRKhYJfgkA6lSkDQQCRqkEoVkrvn0It8Hpe7764pGfQPj7vv7n3v933v7t67mIjQD8X7Qv0P/ifARi+DxfYOq8M4cBE4A5wCbPnw2hvsmgiA6hxCx4E7wBFnPArk3KtSNQgcBRJRaI6uAAsKFGAC2OYHPge8Ab4A4xHBLwF3VdoDXPUDn3SOSeBbRPBboOC6JsBOP/B7oOY4zkcEA1wDVpWFHAPGVAf3Wz3u2H6gsQFwnfXUrrG+e9vtEFObhNdb3UupX0isW3fqsggDeAdMAlldiJfCVq4pIA2YwEdgKOT8SOAB4IIyHgQWgRKQ2kzwHN6FZRj4DNzcDPAQcMLnvgFcBprAaZ2AXZvEju1b/5y329YTw9CqoknLsqYTiUQy0FNEfC37YG7Mtm3RkW3bcjs3ez4opoj4gzNmPl5Zrv7QoorIq4VyVQcqIv7PeGB36sbhg/u26OR47ecvyksrZ3V8A1OdMfNG4emLma/N71bQbmeLpZLubgNT3bGJyYfp4vziUqvV9oTW6o12xszv6jm4Y7fuPR4pV1aabvD9meJUmDihwR27++i5Was3WiIileXqasbMx8PG6NokgnQ9W0gdOpB+9qnemL40OpILnvG3IoM3qr79V/8GZCSTZgexmdIAAAAASUVORK5CYII=");
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 10px;
+  background-color: #001f3f;
+}

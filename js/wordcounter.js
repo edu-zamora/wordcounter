@@ -1,50 +1,166 @@
 /*!
- * Word Counter v0.0.2
+ * Word Counter v0.1.0
  * https://github.com/fengyuanchen/wordcounter
  *
- * Copyright 2014-2015 Fengyuan Chen
+ * Copyright (c) 2014-2015 Fengyuan Chen
  * Released under the MIT license
  *
- * Date: 2015-01-21T13:57:36.212Z
+ * Date: 2015-12-20T05:20:53.552Z
  */
 
-(function () {
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory(global, true);
+  } else {
+    factory(global);
+  }
+})(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
 
   'use strict';
 
-  var WordCounter = function (options) {
-        this.options = util.extend({}, WordCounter.DEFAULTS);
-        this.setup(options);
-        this.source = '';
-        this.result = null;
-      },
 
-      slice = [].slice,
-      indexOf = [].indexOf,
-      toString = {}.toString,
-      util;
+  // Variables
+  // ---------------------------------------------------------------------------
 
-  WordCounter.DEFAULTS = {
-    mincount: 1,
-    minlength: 1,
-    report: true,
-    ignore: []
-  };
+  // RegExps (\u00E0-\u00FC -> àáâãäåæçèéêëìíîïðñòóôõö÷øùúûü)
+  var REGEXP_WORDS = /[\w\u00E0-\u00FC]+(-[\w\u00E0-\u00FC]+)*/g;
+
+  // Others
+  var EMPTY_OBJECT = {};
+  var toString = EMPTY_OBJECT.toString;
+
+
+  // Utilities
+  // ---------------------------------------------------------------------------
+
+  function typeOf(obj) {
+    return toString.call(obj).slice(8, -1).toLowerCase();
+  }
+
+  function isNumber(num) {
+    return typeof num === 'number' && !isNaN(num);
+  }
+
+  function isObject(obj) {
+    return typeof obj === 'object' && obj !== null;
+  }
+
+  function isFunction(fn) {
+    return typeOf(fn) === 'function';
+  }
+
+  function isArray(arr) {
+    return Array.isArray ? Array.isArray(arr) : typeOf(arr) === 'array';
+  }
+
+  function toArray(obj, offset) {
+    var args = [];
+
+    if (Array.from) {
+      return Array.from(obj).slice(offset || 0);
+    }
+
+    // This is necessary for IE8
+    if (isNumber(offset)) {
+      args.push(offset);
+    }
+
+    return args.slice.apply(obj, args);
+  }
+
+  function inArray(value, arr) {
+    var index = -1;
+
+    if (arr.indexOf) {
+      return arr.indexOf(value);
+    } else {
+      each(arr, function (n, i) {
+        if (n === value) {
+          index = i;
+          return false;
+        }
+      });
+    }
+
+    return index;
+  }
+
+  function each(obj, callback) {
+    var length;
+    var i;
+
+    if (obj && isFunction(callback)) {
+      if (isArray(obj) || isNumber(obj.length)/* array-like */) {
+        for (i = 0, length = obj.length; i < length; i++) {
+          if (callback.call(obj, obj[i], i, obj) === false) {
+            break;
+          }
+        }
+      } else if (isObject(obj)) {
+        for (i in obj) {
+          if (obj.hasOwnProperty(i)) {
+            if (callback.call(obj, obj[i], i, obj) === false) {
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    return obj;
+  }
+
+  function extend(obj) {
+    var args;
+
+    if (arguments.length > 1) {
+      args = toArray(arguments);
+
+      if (Object.assign) {
+        return Object.assign.apply(Object, args);
+      }
+
+      args.shift();
+
+      each(args, function (arg) {
+        each(arg, function (prop, i) {
+          obj[i] = prop;
+        });
+      });
+    }
+
+    return obj;
+  }
+
+
+  // Constructor
+  // ---------------------------------------------------------------------------
+
+  function WordCounter (options) {
+    this.options = extend({}, WordCounter.DEFAULTS);
+    this.setup(options);
+    this.source = '';
+    this.result = null;
+  }
+
+
+  // Prototype
+  // ---------------------------------------------------------------------------
 
   WordCounter.prototype = {
     constructor: WordCounter,
 
     setup: function (options) {
-      if (typeof options === 'object') {
-        util.extend(this.options, options);
+      if (isObject(options)) {
+        extend(this.options, options);
       }
     },
 
     count: function (source, callback) {
-      var options = this.options,
-          result = [],
-          caches = [],
-          words;
+      var options = this.options;
+      var result = [];
+      var caches = [];
+      var words;
 
       if (typeof source !== 'string') {
         throw new Error('First argument must be a string');
@@ -53,19 +169,19 @@
       this.source = source;
 
       // Match words
-      words = source.match(/\b\w+(-\w+)*\b/g);
+      words = source.match(REGEXP_WORDS);
 
       if (words) {
 
         // Count words
-        util.each(words, function (word) {
+        each(words, function (word) {
           var existed;
 
-          if (word.length < options.minlength || util.inArray(word, options.ignore) !== -1) {
+          if (word.length < options.minlength || inArray(word, options.ignore) > -1) {
             return;
           }
 
-          util.each(caches, function (cache) {
+          each(caches, function (cache) {
             if (cache.word === word) {
               existed = true;
               cache.count += 1;
@@ -82,7 +198,7 @@
         });
 
         // Filter words
-        util.each(caches, function (cache) {
+        each(caches, function (cache) {
           if (cache.count >= options.mincount) {
             result.push(cache);
           }
@@ -90,10 +206,13 @@
 
         // Sort words
         result = result.sort(function (a, b) {
-          var order = b.count - a.count; // Sort by count
 
+          // Sort by count
+          var order = b.count - a.count;
+
+          // Sort by word
           if (order === 0) {
-            order = [a.word, b.word].sort().shift() === a.word ? -1 : 1; // Sort by word
+            order = [a.word, b.word].sort().shift() === a.word ? -1 : 1;
           }
 
           return order;
@@ -107,7 +226,7 @@
         console.log(this.logs);
       }
 
-      if (typeof callback === 'function') {
+      if (isFunction(callback)) {
         callback.call(this, result, this.logs);
       }
 
@@ -115,13 +234,13 @@
     },
 
     format: function (words) {
-      var total = words.length.toString().length,
-          lines = [];
+      var total = words.length.toString().length;
+      var lines = [];
 
-      util.each(words, function (n, i) {
-        var line = ++i,
-            spaces = [],
-            count = total - line.toString().length;
+      each(words, function (n, i) {
+        var line = ++i;
+        var spaces = [];
+        var count = total - line.toString().length;
 
         while (count-- > 0) {
           spaces.push(' ');
@@ -135,107 +254,19 @@
   };
 
 
-  // Utilities
+  // Default
   // ---------------------------------------------------------------------------
 
-  util = {
-    isArray: Array.isArray || function (arr) {
-      return toString.call(arr) === '[object Array]';
-    },
-
-    toArray: function (obj, start, end) {
-      var args = [];
-
-      if (typeof start === 'number') {
-        args.push(start);
-
-        if (typeof end === 'number') {
-          args.push(end);
-        }
-      }
-
-      return slice.apply(obj, args);
-    },
-
-    inArray: function (elem, arr, start) {
-      var length,
-          i;
-
-      if (util.isArray(arr)) {
-        if (indexOf) {
-          return indexOf.call(arr, elem, start);
-        }
-
-        length = arr.length;
-        i = start ? (start < 0 ? Math.max(0, length + start) : start) : 0;
-
-        for (; i < length; i++) {
-          if (arr[i] === elem) {
-            return i;
-          }
-        }
-      }
-
-      return -1;
-    },
-
-    each: function (obj, callback) {
-      var length,
-          i;
-
-      if (typeof callback === 'function') {
-        if (util.isArray(obj)) {
-          for (i = 0, length = obj.length; i < length; i++) {
-            if (callback.call(obj, obj[i], i) === false) {
-              break;
-            }
-          }
-        } else if (typeof obj === 'object') {
-          for (i in obj) {
-            if (obj.hasOwnProperty(i)) {
-              if (callback.call(obj, obj[i], i) === false) {
-                break;
-              }
-            }
-          }
-        }
-      }
-
-      return obj;
-    },
-
-    extend: function (obj) {
-      var args = util.toArray(arguments);
-
-      if (args.length > 1) {
-        args.shift();
-      } else {
-        obj = this;
-      }
-
-      util.each(args, function (arg) {
-        util.each(arg, function (prop, i) {
-          obj[i] = prop;
-        });
-      });
-
-      return obj;
-    }
+  WordCounter.DEFAULTS = {
+    mincount: 1,
+    minlength: 1,
+    report: true,
+    ignore: []
   };
-
-
-  // Extend prototype
-  // ---------------------------------------------------------------------------
-
-  util.extend(WordCounter.prototype, util);
 
 
   // Export
   // ---------------------------------------------------------------------------
-
-  if (typeof window !== 'undefined') {
-    window.WordCounter = WordCounter;
-  }
 
   if (typeof define === 'function' && define.amd) {
     define('wordcounter', [], function () {
@@ -243,8 +274,10 @@
     });
   }
 
-  if (typeof module === 'object') {
-    module.exports = WordCounter;
+  if (!noGlobal) {
+    window.WordCounter = WordCounter;
   }
 
-})();
+  return WordCounter;
+
+});
