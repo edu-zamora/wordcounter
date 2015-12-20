@@ -20,12 +20,11 @@ dist/
 
 ### Quick start
 
-Four quick start options are available:
+Three quick start options are available:
 
 - [Download the latest release](https://github.com/fengyuanchen/wordcounter/archive/master.zip).
 - Clone the repository: `git clone https://github.com/fengyuanchen/wordcounter.git`.
 - Install with [NPM](http://npmjs.org): `npm install wordcounter`.
-- Install with [Bower](http://bower.io): `bower install fengyuanchen/wordcounter`.
 
 
 ### Usage
