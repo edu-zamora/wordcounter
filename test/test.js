@@ -7,7 +7,7 @@ var assert = require('assert');
 // Options
 // -----------------------------------------------------------------------------
 
-describe('option: ', function () {
+describe('options', function () {
   describe('mincount', function () {
     var wordcounter = new WordCounter({
           mincount: 2
@@ -58,7 +58,7 @@ describe('option: ', function () {
 // Methods
 // -----------------------------------------------------------------------------
 
-describe('method: ', function () {
+describe('methods', function () {
   describe('setup', function () {
     var wordcounter = new WordCounter({
           mincount: 2
@@ -94,7 +94,7 @@ describe('method: ', function () {
 // Others
 // -----------------------------------------------------------------------------
 
-describe('other: ', function () {
+describe('others', function () {
   describe('diacritics', function () {
     var wordcounter = new WordCounter();
 
