@@ -22,8 +22,8 @@
   // Variables
   // ---------------------------------------------------------------------------
 
-  // RegExps
-  var REGEXP_WORDS = /\w+(-\w+)*/g;
+  // RegExps (\u00E0-\u00FC -> àáâãäåæçèéêëìíîïðñòóôõö÷øùúûü)
+  var REGEXP_WORDS = /[\w\u00E0-\u00FC]+(-[\w\u00E0-\u00FC]+)*/g;
 
   // Others
   var EMPTY_OBJECT = {};
