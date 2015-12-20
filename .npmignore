@@ -1,0 +1,6 @@
+bower_components
+demo
+test
+/_*
+/.*
+gulpfile.js
