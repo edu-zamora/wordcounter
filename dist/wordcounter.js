@@ -1,11 +1,11 @@
 /*!
- * Word Counter v0.1.0
+ * Word Counter v0.1.1
  * https://github.com/fengyuanchen/wordcounter
  *
- * Copyright (c) 2014-2015 Fengyuan Chen
+ * Copyright (c) 2014-2016 Fengyuan Chen
  * Released under the MIT license
  *
- * Date: 2015-12-20T05:20:53.552Z
+ * Date: 2016-03-26T16:17:15.939Z
  */
 
 (function (global, factory) {
@@ -176,6 +176,7 @@
         // Count words
         each(words, function (word) {
           var existed;
+          word = options.ignorecase ? word.toLowerCase() : word;
 
           if (word.length < options.minlength || inArray(word, options.ignore) > -1) {
             return;
@@ -261,7 +262,8 @@
     mincount: 1,
     minlength: 1,
     report: true,
-    ignore: []
+    ignore: [],
+    ignorecase: false
   };
 
 

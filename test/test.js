@@ -52,6 +52,19 @@ describe('options', function () {
       }]);
     });
   });
+
+  describe('ignorecase', function () {
+    var wordcounter = new WordCounter({
+      ignorecase: true
+    });
+
+    it('should match "Foo" as "foo"', function () {
+      assert.deepEqual(wordcounter.count('foo Foo'), [{
+        word: 'foo',
+        count: 2
+      }]);
+    });
+  });
 });
 
 

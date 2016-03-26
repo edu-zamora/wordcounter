@@ -78,7 +78,7 @@ fs.readFile('/path/to/source.txt', function(err, data) {
 - Type: `Number`
 - Default: `1`
 
-Min word count. If a word's count less than this number, then it will be ignored.
+Min word count. If a word's count is less than this number, then it will be ignored.
 
 
 ### minlength
@@ -86,7 +86,7 @@ Min word count. If a word's count less than this number, then it will be ignored
 - Type: `Number`
 - Default: `1`
 
-Min word length. If a word's length less than this number, then it will be ignored.
+Min word length. If a word's length is less than this number, then it will be ignored.
 
 
 ### report
@@ -103,9 +103,14 @@ Reports counting result in console.
 - Default: `[]`
 - Example: `['this', 'return', 'function']`
 
-Ingores words.
+Ignores words.
 
+### ignorecase
 
+- Type: `Boolean`
+- Default: `false`
+
+Ignores words' cases, treating them as lower case.
 
 ## Methods
 
@@ -132,11 +137,12 @@ Counts words from the source text, returns a words array.
 ## Example
 
 ```js
-var source = 'foo fubar fubar bar quux quux quux norf norf';
+var source = 'foo fubar fubar bar quux QuUx quux norf norf';
 var wordcounter = new WordCounter({
       mincount: 2,
       minlength: 4,
-      ignore: ['norf']
+      ignore: ['norf'],
+      ignorecase: true
     });
 
 wordcounter.count(source, function (result, logs) {

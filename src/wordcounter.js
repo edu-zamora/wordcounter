@@ -176,6 +176,7 @@
         // Count words
         each(words, function (word) {
           var existed;
+          word = options.ignorecase ? word.toLowerCase() : word;
 
           if (word.length < options.minlength || inArray(word, options.ignore) > -1) {
             return;
@@ -261,7 +262,8 @@
     mincount: 1,
     minlength: 1,
     report: true,
-    ignore: []
+    ignore: [],
+    ignorecase: false
   };
 
 
